@@ -65,7 +65,7 @@
   <script>
     const params = new URLSearchParams(window.location.search);
     const art = params.get("art") || "circle"; 
-    document.getElementById("title").innerText = art.toUpperCase() + " Fourier Art";
+    document.getElementById("title").innerText = "Fourier Art";
 
     // Dynamically load the correct coeffs file
     const coeffScript = document.createElement("script");
