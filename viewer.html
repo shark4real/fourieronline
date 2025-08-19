@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fourier Viewer</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      margin: 20px 10px;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    /* Canvas wrapper */
+    #canvas-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 800px;
+      padding: 10px;
+    }
+
+    canvas {
+      width: 100% !important;   /* Force responsive width */
+      height: auto !important;  /* Keep aspect ratio */
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      #canvas-container {
+        padding: 5px;
+      }
+      canvas {
+        border-radius: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1 id="title">Fourier Drawing</h1>
+  <div id="canvas-container"></div>
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+
+  <!-- Coeffs -->
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const art = params.get("art") || "circle"; 
+    document.getElementById("title").innerText = art.toUpperCase() + " Fourier Art";
+
+    // Dynamically load the correct coeffs file
+    const coeffScript = document.createElement("script");
+    coeffScript.src = `coeffs/${art}.js`;
+    document.body.appendChild(coeffScript);
+
+    // After coeffs load, load animation
+    coeffScript.onload = () => {
+      const animScript = document.createElement("script");
+      animScript.src = "animating.js";
+      document.body.appendChild(animScript);
+    };
+  </script>
+</body>
+</html>
